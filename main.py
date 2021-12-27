@@ -25,12 +25,13 @@ while guesses < 50:
     good_guess = data[(data.state).str.lower() == answer_state.lower()]
     newCity = good_guess["state"].str.cat(sep='\n')
     if answer_state.lower() == "exit":
-        missing_states = ""
-        for item in all_states:
-            if item.lower() not in previous_guesses:
-                missing_states += f"{item}\n"
+        missing_states = [city for city in all_states if city.lower() not in previous_guesses]
+       # for item in all_states:
+        #    if item.lower() not in previous_guesses:
+         #       missing_states += f"{item}\n"
         with open("states_to_learn.txt", mode='w+') as dw:
-            dw.write(missing_states)
+            for city in missing_states:
+                dw.write(city+"\n")
         break
 #not a state's name or already considered
     if len(good_guess) != 0 and (newCity.lower() not in previous_guesses):
